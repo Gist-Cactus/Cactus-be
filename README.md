@@ -5,7 +5,7 @@ this is the backend repository of the project cactus.
 ## Database Structure
 
 the database structure diagram (ERD) avaliable below url
-[click this!](https://github.com/Gist-Cactus/cactus-be.git)
+[click this!](https://dbdocs.io/siwonpada/cactus)
 
 ## Websocket Info
 
