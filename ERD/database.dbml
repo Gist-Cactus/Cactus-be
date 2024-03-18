@@ -12,5 +12,5 @@ Table presentation {
 Table session {
   uuid string [pk]
 
-  Note: 'the session table'
+  Note: 'the session table, which contains the session uuid, it virtualizes the classroom'
 }
