@@ -3,7 +3,7 @@ name: DbDocs CI
 on:
   push:
     paths:
-      - /ERD/database.dbml
+      - '**.dbml'
     branches: [main]
   pull_request:
     branches: [main]
