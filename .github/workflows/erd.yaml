@@ -1,4 +1,4 @@
-name: CI
+name: DbDocs CI
 
 on:
   push:
