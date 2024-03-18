@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    paths:
+      - ./ERD/database.dbml
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install dbdocs
+        run: sudo npm install -g dbdocs
+
+      - name: Check dbdocs
+        run: dbdocs --version
+
+      - name: Update dbdocs project
+        env:
+          DBDOCS_TOKEN: ${{ secrets.DBDOCS_TOKEN }}
+        run: dbdocs build ./ERD/database.dbml
