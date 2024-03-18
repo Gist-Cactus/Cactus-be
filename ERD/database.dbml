@@ -11,4 +11,6 @@ Table presentation {
 
 Table session {
   uuid string [pk]
+
+  Note: 'the session table'
 }
