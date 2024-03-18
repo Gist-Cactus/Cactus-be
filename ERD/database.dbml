@@ -1,0 +1,12 @@
+Project cactus {
+  database_type: 'PostgreSQL'
+  Note: 'the database structure of the project cactus'
+}
+
+Table presentation {
+  id int [pk]
+}
+
+Table session {
+  uuid string [pk]
+}
