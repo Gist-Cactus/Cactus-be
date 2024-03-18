@@ -5,6 +5,8 @@ Project cactus {
 
 Table presentation {
   id int [pk]
+
+  Note: 'the professors presentation table'
 }
 
 Table session {
