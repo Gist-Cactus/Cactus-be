@@ -59,8 +59,9 @@ export class PresentationService {
         this.logger.error(error.message);
         throw new InternalServerErrorException('error occurred');
       });
+    this.logger.log('presentation created: ' + result.id);
     await this.fileService
-      .uploadFile(file, String(result.id))
+      .uploadFile(file, String(result.id) + '.pdf')
       .catch((error) => {
         this.logger.error(error.message);
         throw new InternalServerErrorException('file upload error occurred');

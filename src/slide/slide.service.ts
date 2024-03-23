@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateSlideDto } from './dto/req/createSlide.dto';
+import { CreateElementDto, CreateSlideDto } from './dto/req/createSlide.dto';
 import { SlideListResDto } from './dto/res/slide.dto';
 
 @Injectable()
@@ -21,7 +21,7 @@ export class SlideService {
   }
 
   async createSlide(
-    { title, elements }: CreateSlideDto,
+    { title }: CreateSlideDto,
     presentationId: number,
   ): Promise<void> {
     await this.prismaService.slide.create({
@@ -30,10 +30,20 @@ export class SlideService {
         presentation: {
           connect: { id: presentationId },
         },
-        element: {
-          createMany: {
-            data: elements,
-          },
+      },
+    });
+  }
+
+  async updateSlide(
+    { type, content }: CreateElementDto,
+    slideId: number,
+  ): Promise<void> {
+    await this.prismaService.element.create({
+      data: {
+        type,
+        content,
+        slide: {
+          connect: { id: slideId },
         },
       },
     });

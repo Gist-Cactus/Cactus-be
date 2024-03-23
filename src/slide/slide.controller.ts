@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Patch,
   Post,
   Query,
   UsePipes,
@@ -10,7 +11,7 @@ import {
 import { SlideService } from './slide.service';
 import { ApiTags } from '@nestjs/swagger';
 import { SlideListResDto } from './dto/res/slide.dto';
-import { CreateSlideDto } from './dto/req/createSlide.dto';
+import { CreateElementDto, CreateSlideDto } from './dto/req/createSlide.dto';
 
 @Controller('slide')
 @ApiTags('Slide')
@@ -31,5 +32,13 @@ export class SlideController {
     @Body() createSlideDto: CreateSlideDto,
   ): Promise<void> {
     return this.slideService.createSlide(createSlideDto, presentationId);
+  }
+
+  @Patch()
+  async updateSlide(
+    @Query('slideId') slideId: number,
+    @Body() createSlideDto: CreateElementDto,
+  ): Promise<void> {
+    return this.slideService.updateSlide(createSlideDto, slideId);
   }
 }
