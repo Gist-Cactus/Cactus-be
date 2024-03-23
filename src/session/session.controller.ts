@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { SessionService } from './session.service';
 import { CreateSessionDto } from './dto/req/createSession.dto';
-import { SessionListResDto } from './dto/res/session.dto';
+import { SessionListResDto, SessionResDto } from './dto/res/session.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('session')
@@ -25,7 +25,7 @@ export class SessionController {
   @Post()
   async createSession(
     @Body() createSessionDto: CreateSessionDto,
-  ): Promise<void> {
+  ): Promise<SessionResDto> {
     return this.sessionService.createSession(createSessionDto);
   }
 }

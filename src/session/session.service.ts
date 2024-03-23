@@ -7,7 +7,7 @@ import {
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateSessionDto } from './dto/req/createSession.dto';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-import { SessionListResDto } from './dto/res/session.dto';
+import { SessionListResDto, SessionResDto } from './dto/res/session.dto';
 
 @Injectable()
 export class SessionService {
@@ -19,8 +19,8 @@ export class SessionService {
     return { sessions };
   }
 
-  async createSession({ title }: CreateSessionDto): Promise<void> {
-    await this.prismaService.session
+  async createSession({ title }: CreateSessionDto): Promise<SessionResDto> {
+    return this.prismaService.session
       .create({
         data: {
           title,
