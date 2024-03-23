@@ -14,6 +14,7 @@ export class PresentationController {
     return this.presentationService.getPresentation(sessionUuid);
   }
 
+  // change this to accpet the pdf file
   @Post('')
   async createPresentation(
     @Param('sessionUuid') sessionUuid: string,
