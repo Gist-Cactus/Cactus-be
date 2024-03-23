@@ -12,8 +12,9 @@ model Presentation {
   title     String
   createdAt DateTime @default(now())
 
-  Slide   Slide[]
-  session session[]
+  Slide        Slide[]
+  session_uuid String  @map("session_uuid") @db.Uuid
+  session      session @relation(fields: [session_uuid], references: [uuid])
 
   @@map("presentation")
 }
@@ -45,8 +46,7 @@ model session {
   title     String
   createdAt DateTime @default(now())
 
-  presentationId Int          @map("presentation_id")
-  presentation   Presentation @relation(fields: [presentationId], references: [id])
+  Presentation Presentation[]
 
   @@map("session")
 }
