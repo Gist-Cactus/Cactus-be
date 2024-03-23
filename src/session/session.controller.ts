@@ -9,8 +9,10 @@ import {
 import { SessionService } from './session.service';
 import { CreateSessionDto } from './dto/req/createSession.dto';
 import { SessionListResDto } from './dto/res/session.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('session')
+@ApiTags('session')
 @UsePipes(new ValidationPipe({ transform: true }))
 export class SessionController {
   constructor(private readonly sessionService: SessionService) {}
