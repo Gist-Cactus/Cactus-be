@@ -30,7 +30,7 @@ Table element {
   type string
   content json
 
-  Note: 'the elements table, which contains the elements of the presentation'
+  Note: 'the elements table, which contains the elements of the presentation the content is store the dot format.'
 
 }
 
