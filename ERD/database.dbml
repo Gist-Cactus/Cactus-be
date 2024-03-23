@@ -1,5 +1,5 @@
 Project cactus {
-  database_type: 'PostgreSQL'
+  database_type: 'mysql'
   Note: 'the database structure of the project cactus'
 }
 

@@ -3,11 +3,11 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-enum status {
+enum Status {
   PANDING
   COMPLETE
 }
@@ -15,11 +15,11 @@ enum status {
 model Presentation {
   id        Int      @id @default(autoincrement())
   title     String
-  status    status   @default(PANDING)
+  status    Status   @default(PANDING)
   createdAt DateTime @default(now())
 
   Slide        Slide[]
-  session_uuid String  @map("session_uuid") @db.Uuid
+  session_uuid String  @map("session_uuid")
   session      Session @relation(fields: [session_uuid], references: [uuid])
 
   @@map("presentation")
@@ -48,7 +48,7 @@ model element {
 }
 
 model Session {
-  uuid      String   @id @default(uuid()) @db.Uuid
+  uuid      String   @id @default(uuid())
   title     String   @unique
   createdAt DateTime @default(now())
 

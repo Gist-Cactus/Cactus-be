@@ -5,7 +5,6 @@ import { ConfigModule } from '@nestjs/config';
 import { PresentationModule } from './presentation/presentation.module';
 import { SlideModule } from './slide/slide.module';
 import { SessionModule } from './session/session.module';
-import { PresantationService } from './presantation/presantation.service';
 
 @Module({
   imports: [
@@ -16,6 +15,5 @@ import { PresantationService } from './presantation/presantation.service';
     SessionModule,
   ],
   controllers: [AppController],
-  providers: [PresantationService],
 })
 export class AppModule {}
