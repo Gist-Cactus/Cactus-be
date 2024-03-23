@@ -7,6 +7,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { PresentationListResDto } from './dto/res/presentation.dto';
 import { FileService } from 'src/file/file.service';
+import { CreatePresentationResDto } from './dto/res/createPresentation.dto';
+import { Status } from '@prisma/client';
 
 @Injectable()
 export class PresentationService {
@@ -30,7 +32,7 @@ export class PresentationService {
   async createPresentation(
     file: Express.Multer.File,
     sessionUuid: string,
-  ): Promise<void> {
+  ): Promise<CreatePresentationResDto> {
     if (!file) {
       throw new InternalServerErrorException('file not found');
     }
@@ -42,7 +44,7 @@ export class PresentationService {
       this.logger.error(error.message);
       throw new InternalServerErrorException('file upload error occurred');
     });
-    await this.prismaService.presentation
+    const result = await this.prismaService.presentation
       .create({
         data: {
           title,
@@ -61,5 +63,19 @@ export class PresentationService {
         this.logger.error(error.message);
         throw new InternalServerErrorException('error occurred');
       });
+    return {
+      id: result.id,
+    };
+  }
+
+  async updatePresentationStatus(presentId: number): Promise<void> {
+    await this.prismaService.presentation.update({
+      where: {
+        id: presentId,
+      },
+      data: {
+        status: Status.COMPLETE,
+      },
+    });
   }
 }
