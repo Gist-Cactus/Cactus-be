@@ -7,14 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum status {
+  PANDING
+  COMPLETE
+}
+
 model Presentation {
   id        Int      @id @default(autoincrement())
   title     String
+  status    status   @default(PANDING)
   createdAt DateTime @default(now())
 
   Slide        Slide[]
   session_uuid String  @map("session_uuid") @db.Uuid
-  session      session @relation(fields: [session_uuid], references: [uuid])
+  session      Session @relation(fields: [session_uuid], references: [uuid])
 
   @@map("presentation")
 }
@@ -41,9 +47,9 @@ model element {
   @@map("element")
 }
 
-model session {
+model Session {
   uuid      String   @id @default(uuid()) @db.Uuid
-  title     String
+  title     String   @unique
   createdAt DateTime @default(now())
 
   Presentation Presentation[]
