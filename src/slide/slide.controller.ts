@@ -1,22 +1,35 @@
 import {
+  Body,
   Controller,
   Get,
   Post,
+  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { SlideService } from './slide.service';
+import { ApiTags } from '@nestjs/swagger';
+import { SlideListResDto } from './dto/res/slide.dto';
+import { CreateSlideDto } from './dto/req/createSlide.dto';
 
 @Controller('slide')
+@ApiTags('Slide')
 @UsePipes(new ValidationPipe({ transform: true }))
 export class SlideController {
   constructor(private readonly slideService: SlideService) {}
 
-  @Get('')
-  async getSlide(): Promise<void> {
-    return;
+  @Get()
+  async getSlide(
+    @Query('presentationId') presentationId: number,
+  ): Promise<SlideListResDto> {
+    return this.slideService.getSlide(presentationId);
   }
 
   @Post()
-  async createSlide(): Promise<void> {}
+  async createSlide(
+    @Query('presentationId') presentationId: number,
+    @Body() createSlideDto: CreateSlideDto,
+  ): Promise<void> {
+    return this.slideService.createSlide(createSlideDto, presentationId);
+  }
 }

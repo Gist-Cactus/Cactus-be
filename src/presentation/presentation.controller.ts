@@ -1,9 +1,18 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { PresentationService } from './presentation.service';
-import { CreatePresentationDto } from './dto/req/createPresentation.dto';
 import { PresentationListResDto } from './dto/res/presentation.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('session/:sessionUuid/presentation')
+@ApiTags('Presentation')
 export class PresentationController {
   constructor(private readonly presentationService: PresentationService) {}
 
@@ -15,14 +24,12 @@ export class PresentationController {
   }
 
   // change this to accpet the pdf file
-  @Post('')
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
   async createPresentation(
     @Param('sessionUuid') sessionUuid: string,
-    @Body() createPresentationDto: CreatePresentationDto,
+    @UploadedFile() file: Express.Multer.File,
   ): Promise<void> {
-    return this.presentationService.createPresentation(
-      createPresentationDto,
-      sessionUuid,
-    );
+    return this.presentationService.createPresentation(file, sessionUuid);
   }
 }

@@ -4,14 +4,17 @@ import {
   Logger,
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreatePresentationDto } from './dto/req/createPresentation.dto';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { PresentationListResDto } from './dto/res/presentation.dto';
+import { FileService } from 'src/file/file.service';
 
 @Injectable()
 export class PresentationService {
   private readonly logger = new Logger(PresentationService.name);
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly fileService: FileService,
+  ) {}
 
   async getPresentation(sessionUuid: string): Promise<PresentationListResDto> {
     const presentations = await this.prismaService.presentation.findMany({
@@ -25,9 +28,20 @@ export class PresentationService {
   }
 
   async createPresentation(
-    { title }: CreatePresentationDto,
+    file: Express.Multer.File,
     sessionUuid: string,
   ): Promise<void> {
+    if (!file) {
+      throw new InternalServerErrorException('file not found');
+    }
+    if (file.mimetype !== 'application/pdf') {
+      throw new InternalServerErrorException('file type not supported');
+    }
+    const title = file.originalname.split('.')[0];
+    await this.fileService.uploadFile(file, title).catch((error) => {
+      this.logger.error(error.message);
+      throw new InternalServerErrorException('file upload error occurred');
+    });
     await this.prismaService.presentation
       .create({
         data: {
