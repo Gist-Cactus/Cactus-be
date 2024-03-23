@@ -43,7 +43,7 @@ export class PresentationController {
     },
   })
   @ApiConsumes('multipart/form-data')
-  @Post('upload')
+  @Post('')
   @UseInterceptors(FileInterceptor('file'))
   async createPresentation(
     @Param('sessionUuid') sessionUuid: string,
@@ -52,7 +52,7 @@ export class PresentationController {
     return this.presentationService.createPresentation(file, sessionUuid);
   }
 
-  @Patch(':presentationId')
+  @Patch(':presentationId/status')
   async updatePresentation(
     @Param('presentationId', ParseIntPipe) presentationId: number,
   ): Promise<void> {
