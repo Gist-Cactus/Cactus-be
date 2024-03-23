@@ -1,7 +1,14 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { SlideService } from './slide.service';
 
 @Controller('slide')
+@UsePipes(new ValidationPipe({ transform: true }))
 export class SlideController {
   constructor(private readonly slideService: SlideService) {}
 
