@@ -9,6 +9,30 @@ Table presentation {
   Note: 'the professors presentation table'
 }
 
+Table slide {
+  id int
+  presentation_id int [ref: > presentation.id]
+
+  name string
+
+  indess {
+    (id, presentation_id) [pk]
+  }
+  Note: 'the slides table, which contains the slides of the presentation'
+}
+
+Table element {
+  id int [pk]
+  slide_id int [ref: > slide.id]
+
+  name string
+  type string
+  content json
+
+  Note: 'the elements table, which contains the elements of the presentation'
+
+}
+
 Table session {
   uuid string [pk]
 
