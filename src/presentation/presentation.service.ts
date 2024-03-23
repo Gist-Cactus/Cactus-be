@@ -39,7 +39,7 @@ export class PresentationService {
     if (file.mimetype !== 'application/pdf') {
       throw new InternalServerErrorException('file type not supported');
     }
-    const title = file.originalname.split('.')[0];
+    const title = file.originalname;
     await this.fileService.uploadFile(file, title).catch((error) => {
       this.logger.error(error.message);
       throw new InternalServerErrorException('file upload error occurred');
