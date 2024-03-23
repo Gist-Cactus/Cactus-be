@@ -15,7 +15,7 @@ Table slide {
 
   name string
 
-  indexs {
+  indexes {
     (id, presentation_id) [pk]
   }
   Note: 'the slides table, which contains the slides of the presentation'
