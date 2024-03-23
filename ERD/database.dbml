@@ -5,6 +5,8 @@ Project cactus {
 
 Table presentation {
   id int [pk]
+  title string
+  created_at date
 
   Note: 'the professors presentation table'
 }
@@ -13,7 +15,7 @@ Table slide {
   id int
   presentation_id int [ref: > presentation.id]
 
-  name string
+  title string
 
   indexes {
     (id, presentation_id) [pk]
@@ -25,7 +27,6 @@ Table element {
   id int [pk]
   slide_id int [ref: > slide.id]
 
-  name string
   type string
   content json
 
@@ -35,6 +36,10 @@ Table element {
 
 Table session {
   uuid string [pk]
+  title string
+  created_at date
+
+  presentation_id int [ref: > presentation.id]
 
   Note: 'the session table, which contains the session uuid, it virtualizes the classroom'
 }

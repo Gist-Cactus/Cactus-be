@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Presentation {
+  id        Int      @id @default(autoincrement())
+  title     String
+  createdAt DateTime @default(now())
+
+  Slide   Slide[]
+  session session[]
+
+  @@map("presentation")
+}
+
+model Slide {
+  id    Int    @id @default(autoincrement())
+  title String
+
+  presentationId Int          @map("presentation_id")
+  presentation   Presentation @relation(fields: [presentationId], references: [id])
+  element        element[]
+
+  @@map("slide")
+}
+
+model element {
+  id      Int    @id @default(autoincrement())
+  type    String
+  content Json
+
+  slideId Int   @map("slide_id")
+  slide   Slide @relation(fields: [slideId], references: [id])
+
+  @@map("element")
+}
+
+model session {
+  uuid      String   @id @default(uuid()) @db.Uuid
+  title     String
+  createdAt DateTime @default(now())
+
+  presentationId Int          @map("presentation_id")
+  presentation   Presentation @relation(fields: [presentationId], references: [id])
+
+  @@map("session")
+}
