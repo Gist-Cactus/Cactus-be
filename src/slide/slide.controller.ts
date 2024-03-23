@@ -12,6 +12,7 @@ import { SlideService } from './slide.service';
 import { ApiTags } from '@nestjs/swagger';
 import { SlideListResDto } from './dto/res/slide.dto';
 import { CreateElementDto, CreateSlideDto } from './dto/req/createSlide.dto';
+import { CreateSlideResDto } from './dto/res/createSlide.dto';
 
 @Controller('slide')
 @ApiTags('Slide')
@@ -30,7 +31,7 @@ export class SlideController {
   async createSlide(
     @Query('presentationId') presentationId: number,
     @Body() createSlideDto: CreateSlideDto,
-  ): Promise<void> {
+  ): Promise<CreateSlideResDto> {
     return this.slideService.createSlide(createSlideDto, presentationId);
   }
 
