@@ -40,10 +40,6 @@ export class PresentationService {
       throw new InternalServerErrorException('file type not supported');
     }
     const title = file.originalname;
-    await this.fileService.uploadFile(file, title).catch((error) => {
-      this.logger.error(error.message);
-      throw new InternalServerErrorException('file upload error occurred');
-    });
     const result = await this.prismaService.presentation
       .create({
         data: {
@@ -62,6 +58,12 @@ export class PresentationService {
         }
         this.logger.error(error.message);
         throw new InternalServerErrorException('error occurred');
+      });
+    await this.fileService
+      .uploadFile(file, String(result.id))
+      .catch((error) => {
+        this.logger.error(error.message);
+        throw new InternalServerErrorException('file upload error occurred');
       });
     return {
       id: result.id,
